@@ -119,7 +119,14 @@ RSpec.describe PostsController, type: :controller do
     end
 
     describe "PATCH #update" do
-      let (:params) {{id: post_1, post: {title: Faker::Lorem.word}}}
+      let (:params) do
+        {
+          id: post_1,
+          post: {
+            avatar: Rack::Test::UploadedFile.new(Rails.root.join("spec/upload/file/image1.png"))
+          }
+        }
+      end
 
       context "when params is invalid" do
         before do
@@ -128,7 +135,7 @@ RSpec.describe PostsController, type: :controller do
         end
 
         it "should be change attribute" do
-          expect(post_1.title).to eq params[:post][:title]
+          expect(post_1.avatar_identifier).to eq "image1.png"
         end
 
         it "should redirect to posts_url" do
@@ -142,7 +149,7 @@ RSpec.describe PostsController, type: :controller do
 
       context "when params invalid" do
         before do
-          params[:post][:title] = ""
+          params[:post][:avatar] = Rack::Test::UploadedFile.new(Rails.root.join("spec/upload/file/document.pptx"))
           post_1.reload
           patch :update, params: params
         end
@@ -152,7 +159,7 @@ RSpec.describe PostsController, type: :controller do
         end
 
         it "should not update attribute" do
-          expect(post_1.title).not_to eq params[:post][:title]
+          expect(post_1.avatar_identifier).not_to eq "document.pptx"
         end
 
         it "should return redirect" do

@@ -1,5 +1,8 @@
 class Post < ApplicationRecord
   belongs_to :user
+
+  mount_uploader :avatar, ImagePostUploader
+
   validates :title, :content, presence: true
   validates :content, length: { minimum: 10 }
 

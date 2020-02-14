@@ -27,7 +27,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    # byebug
     if @post.update(post_params)
       redirect_to @post, notice: 'Post was successfully updated.'
     else
@@ -47,6 +46,6 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:user_id, :title, :content, :user_id)
+      params.require(:post).permit(:user_id, :title, :content, :user_id, :avatar)
     end
 end

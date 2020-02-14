@@ -17,6 +17,11 @@
   </div>
 
   <div class="field">
+    <%= form.label :avatar %>
+    <%= form.file_field :avatar, id: :post_avatar %>
+  </div>
+
+  <div class="field">
     <%= form.label :title %>
     <%= form.text_field :title, id: :post_title %>
   </div>
